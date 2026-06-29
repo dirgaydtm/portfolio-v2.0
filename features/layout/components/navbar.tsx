@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { User, Code2, Briefcase, FolderKanban, Mail } from "lucide-react";
 import Dock, { type DockItemData } from "@/features/layout/components/dock";
 import { useScrollVisibility } from "../hooks/use-scroll-visibility";
