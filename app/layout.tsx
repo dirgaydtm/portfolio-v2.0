@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/style/globals.css";
+import { Analytics } from "@vercel/analytics/next";
+import SplashScreen from "@/features/layout/components/splash-screen";
 import { profile } from "@/shared/data/profile";
 import Provider from "./provider";
-import SplashScreen from '@/features/layout/components/splash-screen'
-import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,23 +16,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteDescription = "Hi, I'm Dirga. I build impressive things for the web. Grab a coffee and take a look around my coding journey.";
+const siteDescription =
+  "Hi, I'm Dirga. I build impressive things for the web. Grab a coffee and take a look around my coding journey.";
 
 export const metadata: Metadata = {
   title: `${profile.name} | ${profile.title}`,
   description: siteDescription,
-  metadataBase: new URL('https://dirga.site'),
+  metadataBase: new URL("https://dirga.dev"),
   openGraph: {
     title: `${profile.name} | ${profile.title}`,
     description: siteDescription,
-    url: 'https://dirga.site',
+    url: "https://dirga.dev",
     siteName: `${profile.name} | ${profile.title}`,
-    locale: 'en_US',
-    type: 'website',
+    locale: "en_US",
+    type: "website",
   },
 
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     title: `${profile.name} | ${profile.title}`,
     description: siteDescription,
   },
@@ -45,7 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Analytics />
         <Provider>
           <SplashScreen />

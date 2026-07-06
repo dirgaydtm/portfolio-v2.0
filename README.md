@@ -57,4 +57,4 @@ This project is licensed under the GNU General Public License v3.0 (GPL-3.0).
 **Dirga Yuditama**
 - GitHub: [dirgaydtm](https://github.com/dirgaydtm)
 - LinkedIn: [dirgaydtm](https://linkedin.com/in/dirgaydtm)
-- Website: [dirga.site](https://dirga.site)
+- Website: [dirga.dev](https://dirga.dev)

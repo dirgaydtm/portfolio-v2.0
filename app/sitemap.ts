@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { projects } from "@/features/projects/data/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = "https://dirga.site";
+    const baseUrl = "https://dirga.dev";
 
     const staticPages: MetadataRoute.Sitemap = [
         {
