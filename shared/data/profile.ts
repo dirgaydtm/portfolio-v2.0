@@ -1,5 +1,5 @@
+import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import type { Profile } from "../types/profile";
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 
 export const profile: Profile = {
     name: "Dirga Yuditama",

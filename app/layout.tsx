@@ -10,7 +10,6 @@ const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -31,12 +30,27 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} | ${profile.title}`,
     description: siteDescription,
   },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  url: "https://dirga.dev",
+  jobTitle: profile.title,
+  image: `https://dirga.dev${profile.avatar}`,
+  description: profile.bio,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Malang",
+    addressCountry: "ID",
+  },
+  sameAs: profile.socials.map((s) => s.url),
 };
 
 export default function RootLayout({
@@ -49,6 +63,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static JSON-LD data, not user input
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
+        />
         <Analytics />
         <Provider>
           <SplashScreen />
