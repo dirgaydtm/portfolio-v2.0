@@ -1,12 +1,11 @@
+import { PiDownloadSimple, PiHandWaving } from "react-icons/pi";
+import { SiArchlinux } from "react-icons/si";
+import { LayeredButton } from "@/shared/components/layered-button";
 import { Separator } from "@/shared/components/separator";
 import { profile } from "@/shared/data/profile";
 import LetterGlitch from "./letter-glitch";
 import ProfilePicture from "./profile-picture";
 import SocialButton from "./social-button";
-import { LayeredButton } from "@/shared/components/layered-button";
-import { PiDownloadSimple } from "react-icons/pi";
-import { PiHandWaving } from "react-icons/pi";
-import { SiArchlinux } from "react-icons/si";
 
 export default function HeroSection() {
     return (
@@ -34,17 +33,13 @@ export default function HeroSection() {
                     <span className="md:block hidden max-w-xl text-base text-center text-muted-foreground">{profile.description} I use <SiArchlinux className="inline-flex" /> btw.</span>
                     <Separator className="md:block hidden w-full" />
                     <span className="flex flex-wrap items-center justify-center gap-4">
-                        <LayeredButton variant="outline" size="lg" className="w-30 md:w-auto" asChild>
-                            <a href="#contact" aria-label="Navigate to contact section">
-                                <PiHandWaving className="h-4 w-4" aria-hidden="true" />
-                                Say Hi!
-                            </a>
+                        <LayeredButton as="a" href="#contact" aria-label="Navigate to contact section" variant="outline" size="lg" className="w-30 md:w-auto">
+                            <PiHandWaving className="h-4 w-4" aria-hidden="true" />
+                            Say Hi!
                         </LayeredButton>
-                        <LayeredButton size="lg" className="w-30 md:w-auto" asChild>
-                            <a href={profile.resumeUrl} download aria-label="Download resume">
-                                <PiDownloadSimple className="h-4 w-4" aria-hidden="true" />
-                                Resume
-                            </a>
+                        <LayeredButton as="a" href={profile.resumeUrl} download aria-label="Download resume" size="lg" className="w-30 md:w-auto">
+                            <PiDownloadSimple className="h-4 w-4" aria-hidden="true" />
+                            Resume
                         </LayeredButton>
                         <SocialButton socials={profile.socials} className="flex gap-4" />
                     </span>

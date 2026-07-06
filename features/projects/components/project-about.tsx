@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/card";
-import type { Project } from "../types/project";
-import { LayeredButton } from "@/shared/components/layered-button";
 import { ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/card";
+import { LayeredButton } from "@/shared/components/layered-button";
 import MagicCard from "@/shared/components/magic-card";
+import type { Project } from "../types/project";
 
 interface ProjectAboutProps {
     project: Project;
@@ -18,27 +18,29 @@ export default function ProjectAbout({ project, className }: ProjectAboutProps) 
                     <CardTitle>About the Project</CardTitle>
                     <div className="flex gap-3">
                         {project.liveUrl && (
-                            <LayeredButton variant="outline" size="icon-lg" asChild>
-                                <a
-                                    href={project.liveUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={`Visit ${project.title} live site`}
-                                >
-                                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                                </a>
+                            <LayeredButton
+                                as="a"
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Visit ${project.title} live site`}
+                                variant="outline"
+                                size="icon-lg"
+                            >
+                                <ExternalLink className="h-4 w-4" aria-hidden="true" />
                             </LayeredButton>
                         )}
                         {project.githubUrl && (
-                            <LayeredButton variant="outline" size="icon-lg" asChild>
-                                <a
-                                    href={project.githubUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={`View ${project.title} source code on GitHub`}
-                                >
-                                    <FaGithub className="h-4 w-4" aria-hidden="true" />
-                                </a>
+                            <LayeredButton
+                                as="a"
+                                href={project.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`View ${project.title} source code on GitHub`}
+                                variant="outline"
+                                size="icon-lg"
+                            >
+                                <FaGithub className="h-4 w-4" aria-hidden="true" />
                             </LayeredButton>
                         )}
                     </div>

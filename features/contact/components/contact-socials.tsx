@@ -11,20 +11,16 @@ interface ContactSocialsProps {
 export default function ContactSocials({ email, socials, className }: ContactSocialsProps) {
     return (
         <div className={className}>
-            <LayeredButton variant="outline" className="justify-start" asChild>
-                <a href={`mailto:${email}`}>
-                    <Mail className="h-4 w-4" />
-                    <p className="hidden md:block">{email}</p>
-                </a>
+            <LayeredButton as="a" href={`mailto:${email}`} variant="outline" className="justify-start">
+                <Mail className="h-4 w-4" />
+                <p className="hidden md:block">{email}</p>
             </LayeredButton>
             {socials.map((social) => {
                 const Icon = social.icon;
                 return (
-                    <LayeredButton key={`${social.name}-${social.url}`} variant="outline" className="justify-start" asChild>
-                        <a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name}>
-                            <Icon className="h-4 w-4" />
-                            <p className="hidden md:block">{social.name}</p>
-                        </a>
+                    <LayeredButton as="a" href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name} key={`${social.name}-${social.url}`} variant="outline" className="justify-start">
+                        <Icon className="h-4 w-4" />
+                        <p className="hidden md:block">{social.name}</p>
                     </LayeredButton>
                 );
             })}

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, isValidElement, cloneElement } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { useEffect, useRef } from "react";
 import { cn } from "@/shared/lib/utils";
 
 const buttonVariants = cva(
@@ -28,33 +28,35 @@ const buttonVariants = cva(
   }
 );
 
-interface LayeredButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-  VariantProps<typeof buttonVariants> {
+export type LayeredButtonProps<T extends React.ElementType = "button"> = {
+  as?: T;
   borderWidth?: number;
-  asChild?: boolean;
-  ref?: React.Ref<HTMLButtonElement>;
-}
+  className?: string;
+  children?: React.ReactNode;
+  ref?: React.Ref<HTMLElement>;
+} & VariantProps<typeof buttonVariants> &
+  Omit<React.ComponentPropsWithoutRef<T>, "as" | "borderWidth" | "className" | "children" | "ref" | "size" | "variant">;
 
-export function LayeredButton({
+export function LayeredButton<T extends React.ElementType = "button">({
+  as,
   className,
   variant,
   size,
   children,
   borderWidth = 3,
-  asChild = false,
   ref,
   ...props
-}: LayeredButtonProps) {
-  const internalRef = useRef<HTMLButtonElement>(null);
+}: LayeredButtonProps<T>) {
+  const Component = as || "button";
+  const internalRef = useRef<HTMLElement>(null);
   const circleRef = useRef<HTMLSpanElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const hoverLabelRef = useRef<HTMLSpanElement>(null);
 
-  const buttonRef = (ref as React.RefObject<HTMLButtonElement>) ?? internalRef;
+  const buttonRef = ref ?? internalRef;
 
   useEffect(() => {
-    const button = buttonRef.current;
+    const button = buttonRef && typeof buttonRef !== "function" ? (buttonRef as React.RefObject<HTMLElement | null>).current : null;
     const circle = circleRef.current;
     const label = labelRef.current;
     const hoverLabel = hoverLabelRef.current;
@@ -92,7 +94,7 @@ export function LayeredButton({
     return () => window.removeEventListener("resize", layout);
   }, [buttonRef]);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
     const circle = circleRef.current;
     const label = labelRef.current;
     const hoverLabel = hoverLabelRef.current;
@@ -111,9 +113,13 @@ export function LayeredButton({
       hoverLabel.style.transform = "translateY(0)";
       hoverLabel.style.opacity = "1";
     }
+
+    if (props.onMouseEnter) {
+      (props.onMouseEnter as React.MouseEventHandler<HTMLElement>)(e);
+    }
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
     const circle = circleRef.current;
     const label = labelRef.current;
     const hoverLabel = hoverLabelRef.current;
@@ -132,12 +138,11 @@ export function LayeredButton({
       hoverLabel.style.transform = `translateY(${hoverLabel.dataset.startY || 100}px)`;
       hoverLabel.style.opacity = "0";
     }
-  };
 
-  const childContent =
-    asChild && isValidElement(children)
-      ? (children as React.ReactElement<{ children?: React.ReactNode }>).props.children
-      : children;
+    if (props.onMouseLeave) {
+      (props.onMouseLeave as React.MouseEventHandler<HTMLElement>)(e);
+    }
+  };
 
   const buttonContent = (
     <>
@@ -158,13 +163,13 @@ export function LayeredButton({
           ref={labelRef}
           className="inline-flex items-center justify-center gap-2 relative z-2 text-foreground will-change-transform"
         >
-          {childContent}
+          {children}
         </span>
         <span
           ref={hoverLabelRef}
           className="inline-flex items-center justify-center gap-2 absolute left-0 top-0 z-3 whitespace-nowrap text-primary-foreground px-4 py-2 will-change-[transform,opacity]"
         >
-          {childContent}
+          {children}
         </span>
       </span>
     </>
@@ -172,34 +177,15 @@ export function LayeredButton({
 
   const sharedClassName = cn(buttonVariants({ variant, size }), "rounded-md p-0!", className);
 
-  if (asChild && isValidElement(children)) {
-    const childElement = children as React.ReactElement<
-      React.HTMLAttributes<HTMLElement> & { className?: string; ref?: React.Ref<HTMLElement> }
-    >;
-    /* eslint-disable react-hooks/refs */
-    return cloneElement(
-      childElement,
-      {
-        ...props,
-        ref: buttonRef as React.Ref<HTMLElement>,
-        className: cn(sharedClassName, childElement.props.className),
-        onMouseEnter: handleMouseEnter,
-        onMouseLeave: handleMouseLeave,
-      },
-      buttonContent
-    );
-    /* eslint-enable react-hooks/refs */
-  }
-
   return (
-    <button
+    <Component
       ref={buttonRef}
       className={sharedClassName}
+      {...(props as React.ComponentPropsWithoutRef<T>)}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      {...props}
     >
       {buttonContent}
-    </button>
+    </Component>
   );
 }

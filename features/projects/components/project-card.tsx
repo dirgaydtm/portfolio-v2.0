@@ -1,16 +1,16 @@
 "use client";
 
-import { memo } from "react";
-import { Card, CardHeader, CardContent, CardFooter } from "@/shared/components/card";
-import { Badge } from "@/shared/components/badge";
-import { LayeredButton } from "@/shared/components/layered-button";
-import { ArrowRight, ArrowRightCircle, ExternalLink, FolderKanban } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
+import { ArrowRight, ExternalLink, FolderKanban } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import type { Project } from "../types/project";
-import MagicCard from "@/shared/components/magic-card";
+import { memo } from "react";
+import { FaGithub } from "react-icons/fa";
+import { Badge } from "@/shared/components/badge";
+import { Card, CardContent, CardFooter, CardHeader } from "@/shared/components/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/shared/components/hover-card";
+import { LayeredButton } from "@/shared/components/layered-button";
+import MagicCard from "@/shared/components/magic-card";
+import type { Project } from "../types/project";
 
 interface ProjectCardProps {
   project: Project;
@@ -41,39 +41,31 @@ function ProjectCard({ project, className }: ProjectCardProps) {
               <span className="line-clamp-1 min-w-0 flex-1">{project.title}</span>
               {project.githubUrl && (
                 <LayeredButton
+                  as="a"
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`View ${project.title} source code on GitHub`}
                   variant="outline"
                   size="icon"
                   className="ml-auto"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
                 >
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    aria-label={`View ${project.title} source code on GitHub`}
-                  >
-                    <FaGithub className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  <FaGithub className="h-4 w-4" aria-hidden="true" />
                 </LayeredButton>
               )}
               {project.liveUrl && (
                 <LayeredButton
+                  as="a"
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label={`Visit ${project.title} live site`}
                   variant="outline"
                   size="icon"
-                  asChild
-                  onClick={(e) => e.stopPropagation()}
                 >
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    aria-label={`Visit ${project.title} live site`}
-                  >
-                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
                 </LayeredButton>
               )}
             </CardHeader>

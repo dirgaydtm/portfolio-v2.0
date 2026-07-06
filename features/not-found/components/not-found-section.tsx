@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { CuriousBuddies } from "./curious-buddies";
-import type { CharacterColors } from "./curious-buddies";
-import { LayeredButton } from "@/shared/components/layered-button";
 import { IoHomeSharp } from "react-icons/io5";
 import Reveal from "@/shared/animations/reveal";
+import { LayeredButton } from "@/shared/components/layered-button";
+import type { CharacterColors } from "./curious-buddies";
+import { CuriousBuddies } from "./curious-buddies";
 
 const buddyColors: CharacterColors = {
   alto: "var(--buddy-alto)",
@@ -30,11 +30,9 @@ export default function NotFoundSection() {
             The page you&apos;re looking for has vanished into the void. Even our buddies can&apos;t find it.
           </Reveal>
           <div className="pt-6">
-            <LayeredButton size="lg" asChild>
-              <Link href="/" aria-label="Navigate to home page">
-                <IoHomeSharp aria-hidden="true" />
-                Take me home
-              </Link>
+            <LayeredButton as={Link} href="/" aria-label="Navigate to home page" size="lg">
+              <IoHomeSharp aria-hidden="true" />
+              Take me home
             </LayeredButton>
           </div>
         </div>
