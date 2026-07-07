@@ -1,14 +1,14 @@
 import Footer from "@/features/layout/components/footer";
 
 export default function ProjectsLayout({
-    children,
+	children,
 }: {
-    children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-    return (
-        <>
-            {children}
-            <Footer />
-        </>
-    );
+	return (
+		<>
+			{children}
+			<Footer />
+		</>
+	);
 }

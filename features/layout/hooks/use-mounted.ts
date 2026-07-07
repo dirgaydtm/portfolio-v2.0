@@ -1,16 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function useMounted() {
-    const [mounted, setMounted] = useState(false);
+	const [mounted, setMounted] = useState(false);
 
-    useEffect(() => {
-        requestAnimationFrame(() => {
-            setMounted(true);
-        });
-    }, []);
+	useEffect(() => {
+		requestAnimationFrame(() => {
+			setMounted(true);
+		});
+	}, []);
 
-    return mounted;
+	return mounted;
 }
-
