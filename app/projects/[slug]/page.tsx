@@ -4,26 +4,28 @@ import { projects } from "@/features/projects/data/projects";
 import type { Project } from "@/features/projects/types/project";
 
 interface ProjectPageProps {
-    params: Promise<{
-        slug: string;
-    }>;
+	params: Promise<{
+		slug: string;
+	}>;
 }
 
-const projectsBySlug: Map<string, Project> = new Map(projects.map(p => [p.slug, p]));
+const projectsBySlug: Map<string, Project> = new Map(
+	projects.map((p) => [p.slug, p]),
+);
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-    const { slug } = await params;
-    const project = projectsBySlug.get(slug);
+	const { slug } = await params;
+	const project = projectsBySlug.get(slug);
 
-    if (!project) {
-        notFound();
-    }
+	if (!project) {
+		notFound();
+	}
 
-    return <ProjectDetail project={project} />;
+	return <ProjectDetail project={project} />;
 }
 
 export function generateStaticParams() {
-    return projects.map((project) => ({
-        slug: project.slug,
-    }));
+	return projects.map((project) => ({
+		slug: project.slug,
+	}));
 }

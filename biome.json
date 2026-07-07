@@ -1,0 +1,11 @@
+{
+	"files": {
+		"ignore": [".next/**", "node_modules/**"]
+	},
+	"css": {
+		"parser": {
+			"cssModules": true,
+			"tailwindDirectives": true
+		}
+	}
+}
