@@ -1,11 +1,26 @@
 {
+	"$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
 	"files": {
-		"ignore": [".next/**", "node_modules/**"]
+		"includes": ["**", "!**/.next", "!**/dist", "!**/node_modules"]
+	},
+	"formatter": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended"
+		}
 	},
 	"css": {
 		"parser": {
-			"cssModules": true,
 			"tailwindDirectives": true
+		},
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
 		}
 	}
 }
