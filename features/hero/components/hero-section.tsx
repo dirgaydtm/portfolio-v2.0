@@ -14,9 +14,9 @@ export default function HeroSection() {
 			className="relative flex h-screen flex-col items-center justify-center px-4 sm:px-6 overflow-hidden"
 		>
 			{/* Background with glitch + overlay */}
-			<div className="absolute inset-0 hidden h-[60vh] dark:flex z-0">
-				<LetterGlitch />
-				<div className="absolute inset-0 bg-linear-to-t from-background via-background to-background/50" />
+			<div className="absolute inset-0 hidden h-7/10 dark:flex z-0">
+				<LetterGlitch className="h-1/2!" />
+				<div className="absolute h-full w-full bottom-0 bg-linear-to-t from-background via-background to-background/50" />
 			</div>
 
 			{/* Main content */}
