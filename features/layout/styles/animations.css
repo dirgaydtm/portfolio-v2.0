@@ -1,3 +1,7 @@
+html.no-splash .splash-overlay {
+	display: none;
+}
+
 .hiding {
 	animation: splash-fade-out 1s cubic-bezier(0.43, 0.13, 0.23, 0.96) forwards;
 }

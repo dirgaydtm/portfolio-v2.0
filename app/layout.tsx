@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "@/style/globals.css";
+import { Montserrat } from "next/font/google";
+import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import SplashScreen from "@/features/layout/components/splash-screen";
 import { profile } from "@/shared/data/profile";
 import Provider from "./provider";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
+const montserrat = Montserrat({
+	variable: "--font-montserrat",
 	subsets: ["latin"],
 });
 
@@ -60,9 +56,14 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
+			<head>
+				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: essential for instant no-splash detection before first paint
+					dangerouslySetInnerHTML={{
+						__html:
+							"try{if(sessionStorage.getItem('hasVisited')==='true'){document.documentElement.classList.add('no-splash')}}catch(e){}",
+					}}
+				/>
 				<script
 					type="application/ld+json"
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: static JSON-LD data, not user input
@@ -70,6 +71,8 @@ export default function RootLayout({
 						__html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
 					}}
 				/>
+			</head>
+			<body className={`${montserrat.variable} antialiased overflow-x-clip`}>
 				<Analytics />
 				<Provider>
 					<SplashScreen />
