@@ -1,9 +1,10 @@
-import type { IconType } from "react-icons/lib";
+import type { IconType } from 'react-icons/lib';
 
 export type SocialLink = {
 	name: string;
 	url: string;
 	icon: IconType;
+	platform: string;
 };
 
 export type Profile = {

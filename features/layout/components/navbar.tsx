@@ -1,52 +1,55 @@
 "use client";
 
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Briefcase, Code2, FolderKanban, Mail, User } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMemo } from "react";
 import Dock, { type DockItemData } from "@/features/layout/components/dock";
 import { useScrollVisibility } from "../hooks/use-scroll-visibility";
 
+if (typeof window !== "undefined") {
+	gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
+}
+
+const NAV_ITEMS = [
+	{ icon: <User />, label: "About", id: "hero" },
+	{ icon: <Code2 />, label: "Skills", id: "skills" },
+	{ icon: <Briefcase />, label: "Experience", id: "experience" },
+	{ icon: <FolderKanban />, label: "Projects", id: "projects" },
+	{ icon: <Mail />, label: "Contact", id: "contact" },
+];
+
+const getScrollTarget = (id: string): number | string => {
+	const el = document.getElementById(id);
+	if (!el) return `#${id}`;
+	const st = ScrollTrigger.getAll().find(
+		(t) => t.pin?.contains(el) || t.pin === el,
+	);
+	if (!st?.pin) return `#${id}`;
+	const slides = Array.from(st.pin.querySelectorAll("[id]"));
+	return (
+		st.start +
+		(slides.indexOf(el) / Math.max(slides.length - 1, 1)) * (st.end - st.start)
+	);
+};
+
 export default function Navbar() {
 	const isHidden = useScrollVisibility();
 
 	const dockItems: DockItemData[] = useMemo(
-		() => [
-			{
-				icon: <User />,
-				label: "About",
+		() =>
+			NAV_ITEMS.map((item) => ({
+				...item,
 				onClick: () => {
-					window.location.hash = "#hero";
+					gsap.to(window, {
+						duration: 0.8,
+						scrollTo: { y: getScrollTarget(item.id), autoKill: false },
+						ease: "power2.inOut",
+					});
 				},
-			},
-			{
-				icon: <Code2 />,
-				label: "Skills",
-				onClick: () => {
-					window.location.hash = "#skills";
-				},
-			},
-			{
-				icon: <Briefcase />,
-				label: "Experience",
-				onClick: () => {
-					window.location.hash = "#experience";
-				},
-			},
-			{
-				icon: <FolderKanban />,
-				label: "Projects",
-				onClick: () => {
-					window.location.hash = "#projects";
-				},
-			},
-			{
-				icon: <Mail />,
-				label: "Contact",
-				onClick: () => {
-					window.location.hash = "#contact";
-				},
-			},
-		],
+			})),
 		[],
 	);
 

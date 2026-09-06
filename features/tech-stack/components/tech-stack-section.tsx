@@ -16,9 +16,9 @@ export default function TechStackSection() {
 	return (
 		<section
 			id="skills"
-			className="relative flex items-center justify-center py-20 px-6 overflow-hidden"
+			className="relative flex items-center justify-center py-20 lg:py-6 px-6 overflow-hidden w-full lg:h-full bg-background"
 		>
-			<div className="flex flex-col relative gap-10 max-w-7xl z-1">
+			<div className="flex flex-col relative gap-6 lg:gap-8 max-w-7xl z-1">
 				<div className="mx-auto flex flex-col items-center gap-4 max-w-6xl text-center">
 					<Badge variant="outline">Tech Stack</Badge>
 					<Reveal once>

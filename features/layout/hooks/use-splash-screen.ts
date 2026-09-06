@@ -1,28 +1,22 @@
-"use client";
-
 import { useEffect, useState } from "react";
-
-const SPLASH_DURATION = 5000;
-const STORAGE_KEY = "hasVisited";
 
 export function useSplashScreen() {
 	const [show, setShow] = useState(true);
+	const [isHiding, setIsHiding] = useState(false);
 
 	useEffect(() => {
-		const visited = sessionStorage.getItem(STORAGE_KEY);
-
-		if (visited) {
-			setTimeout(() => setShow(false), 0);
-			return;
-		}
+		if (sessionStorage.getItem("hasVisited")) return setShow(false);
 
 		const timer = setTimeout(() => {
-			setShow(false);
-			sessionStorage.setItem(STORAGE_KEY, "true");
-		}, SPLASH_DURATION);
+			setIsHiding(true);
+			setTimeout(() => {
+				setShow(false);
+				sessionStorage.setItem("hasVisited", "true");
+			}, 1000); // wait for exit animation (1s)
+		}, 6000); // wait for splash screen (6s)
 
 		return () => clearTimeout(timer);
 	}, []);
 
-	return show;
+	return { show, isHiding };
 }
