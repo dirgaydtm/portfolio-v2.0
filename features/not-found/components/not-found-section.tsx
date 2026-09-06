@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { IoHomeSharp } from "react-icons/io5";
 import Reveal from "@/shared/animations/reveal";
 import { LayeredButton } from "@/shared/components/layered-button";
@@ -45,7 +44,7 @@ export default function NotFoundSection() {
 					</Reveal>
 					<div className="pt-6">
 						<LayeredButton
-							as={Link}
+							as="a"
 							href="/"
 							aria-label="Navigate to home page"
 							size="lg"
